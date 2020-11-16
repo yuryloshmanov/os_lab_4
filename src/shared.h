@@ -6,9 +6,9 @@
 #include <stddef.h>
 
 
-#define MEMORY_NAME "/lab4_fdsjdsos"
+#define MEMORY_NAME "/lab4_shm"
 #define MEMORY_SIZE 4096
-#define DATA_SIZE 4000
+#define DATA_SIZE 256
 
 
 #if DATA_SIZE > MEMORY_SIZE
@@ -19,7 +19,6 @@
 typedef struct line_sums {
     size_t size;
     long double data[DATA_SIZE];
-//    size_t size; // sigsegv
 } line_sums_t;
 
 

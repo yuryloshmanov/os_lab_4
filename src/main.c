@@ -9,12 +9,12 @@
 #include "shared.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
     pid_t child_pid = fork();
     check(child_pid == -1, NULL, NULL, "Fork failed\n");
 
     if (child_pid == 0) {
-        execl("child", "child", (char *)NULL);
+        execl("child", "child", argv[1], (char *)NULL);
         perror("Can't execute child\n");
         exit(1);
     } else {

@@ -48,7 +48,7 @@ void sum_numbers(FILE *input, line_sums_t *addr) {
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
     signal(SIGSEGV, sigsegv_handler);
 
     int fd = shm_open(MEMORY_NAME, O_EXCL | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
@@ -57,13 +57,16 @@ int main() {
 
     line_sums_t *addr = mmap(NULL, MEMORY_SIZE, PROT_WRITE, MAP_SHARED, fd, 0);
     check(addr == (void *)-1, addr, &fd, "Mmap error\n");
-
-    FILE *input = fopen("input.txt", "r");
-    check(input == NULL, addr, &fd, "Can't open file 'input.txt'\n");
-
+    FILE *input = NULL;
+    if (argc == 2) {
+        input = fopen(argv[1], "r");
+    } else {
+        input = fopen("input.txt", "r");
+    }
+    check(input == NULL, addr, &fd, "Can't open file\n");
     sum_numbers(input, addr);
-    munmap(addr, MEMORY_SIZE);
     fclose(input);
+    munmap(addr, MEMORY_SIZE);
     close(fd);
     return 0;
 }
