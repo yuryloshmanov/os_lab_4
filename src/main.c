@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     check(child_pid == -1, NULL, NULL, "Fork failed\n");
 
     if (child_pid == 0) {
-        execl("child", "child", argv[1], (char *)NULL);
+        execl("child", "child", argc == 2 ? argv[1] : (char *)NULL, (char *)NULL);
         perror("Can't execute child\n");
         exit(1);
     } else {
